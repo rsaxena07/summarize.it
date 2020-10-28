@@ -1,0 +1,3 @@
+[submodule "summarizeFrontEnd"]
+	path = summarizeFrontEnd
+	url = https://github.com/ams064/summarizeFrontEnd.git
