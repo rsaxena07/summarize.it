@@ -1,7 +1,7 @@
 # summarize.it
 MCS Capstone Project (CS-297P) for Fall 2020 Quarter:
 
-Team Members:
+Team Members: \
 Rishabh Saxena \
 Amit Somani \
 Jash Ashwin Sohni
