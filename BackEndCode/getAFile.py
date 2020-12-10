@@ -3,6 +3,7 @@ import boto3
 import pymysql
 import sys
 import logging
+import os
 
 
 def create_presigned_url(key):
@@ -31,18 +32,14 @@ def create_presigned_url(key):
 
 def lambda_handler(event, context):
     key = 'users/'
-    #key = 'users/amit.somani64gmail.com/Original_2020-11-2019:32:18.759406.txt'
     userEmail = event['context']['email']
-    #userEmail = 'amit.somani64@gmail.com'
     key += userEmail.replace('@', '') + "/"
     documentName = event['body-json']['document_name']
-    #documentName = 'NewTestDoc'
     timeStamp = event['body-json']['timestamp']
-    #timeStamp = '2020-12-03 20:50:48'
 
     rds_host = "database-1.c8azeqy71oy4.us-west-1.rds.amazonaws.com"
-    name = "admin"
-    password = "Fastrack007"
+    name = os.environ['dbUserName']
+    password = os.environ['dbPassword']
     db_name = "SummarizeItDB"
 
     # establish connection with rds
@@ -65,12 +62,7 @@ def lambda_handler(event, context):
         for name in cur.fetchall():
             toGetFile += name[0]
 
-    # print(userEmail)
-    # print(documentName)
-    # print(timeStamp)
     response = create_presigned_url(toGetFile)
-    #response = "hi"
-    # print(response)
 
     return {
         'statusCode': 200,
