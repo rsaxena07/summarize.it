@@ -4,6 +4,7 @@ import datetime
 import pymysql
 import sys
 import logging
+import os
 
 
 def lambda_handler(event, context):
@@ -11,19 +12,21 @@ def lambda_handler(event, context):
     bucket_name = "text-files-uci-summarize-it"
 
     userEmail = event['context']['email']
-    #userEmail = 'jashSohni@gmail.com'
 
-    textData = event['body-json']['input_data']
-    #textData = "this is a test text"
+    textData = "Output Data: \n \n"
+
+    textData += event['body-json']['output_data']
+
+    textData += "\n \n \nInput Data: \n \n"
+    textData += event['body-json']['input_data']
 
     userGivenName = event['body-json']['file_name']
-    #userGivenName = 'shouldNotCome'
 
     timeNow = datetime.datetime.now()
     currentTimeStamp = timeNow.strftime("%m:%d:%Y%H:%M:%S")
     rds_host = "database-1.c8azeqy71oy4.us-west-1.rds.amazonaws.com"
-    name = "admin"
-    password = "Fastrack007"
+    name = os.environ['dbUserName']
+    password = os.environ['dbPassword']
     db_name = "SummarizeItDB"
 
     # establish connection with rds
